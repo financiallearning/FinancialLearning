@@ -1,0 +1,36 @@
+<div>
+<p>
+Part Three: Extra Regressions
+Methodology:
+Random Forest Regression: Random forest regression operate by constructing a multitude of decision trees at training time and give the output of the class that is the mode of classes output by individual trees. It has higher accuracy compared with other models and runs efficiently on large databases, especially for data with thousands of input variables. Sampling with replacement draws the training set of the current tree and about one-third of the cases are left out of sample. The oob(out-of-bag) data is used to get a running unbiased estimate of the classification error as trees are added to the forest. All of the data are run down the tree and proximities are computed for each pair of cases. The proximity is increased by one if two cases occupy the same terminal node. 
+In this project, we divided the market cap data into two classes. For market cap that is lower than the median of the market cap, we marked it as 0. For market cap that is higher than the median of the market cap, we mark it as 1. Our prediction would be whether the company has the data that is higher or lower than the median.
+
+Time Series Regression: The time series is always considered as an ordered sequence of values (data points) of variables at equally spaced time intervals. There are three very broad classes that are used most often, these are autoregressive (AR) models, the integrated (I) models and the moving average (MA) models. These models are often intertwined to generate new models such as the ARMA model, which is basically a combination of (AR) model and (MA) model. The most commonly used model for time series data is autoregressive equation, written as AR(1). The AR(1) equation is a standard linear difference equation:
+	             X_k=ρX_(k-1)+ϵ_k  
+Using the difference equation above, we can derive the equation as:
+ 
+In this project, we are trying to use the market cap data until 2013 to predict the market cap for 2014. Here, the market cap data is the variable X and it repeats recursively to predict the market cap of 2014. For some companies that we just have the data until 2012 for example. We will use the time series to predict the market cap for 2013 first and then use the predicted value to predict the 2014. Based on the fact that time series is only based on one variable, the accuracy for this regression may not that good when applying to our model because it requires a large data set for past years. But the largest dataset we had for one company is 10 and some companies only have two or three years’ data. It would not make sense to use time series for these kinds of companies. So we eliminate the company that has data less than 6 years and run the time series regression to predict the market cap.
+
+Results Explanation:
+Random Forest Regression:
+We do the random forest regression for quandl data divided by assets (Not normalized), edgar data divided by assets (Not normalized), quandl data normalized. Since it is the same step used for three datasets, we will use the edgar data divided by assets (not normalized) as an example:
+ 
+As we could see from the above plot, the OOB score as an estimate of accuracy of this model is 0.8048. The mean accuracy score for this model is 0.996959. The pred_Marketcap_2014 is the prediction of the market cap for 2014. 0 indicates that the market cap for that company is lower than the median and 1 indicates that the market cap for that company is higher than the median.
+The confusion matrix for the test data:
+
+
+
+
+
+
+
+
+The time series predicts the market cap follows the last year data we have for that company. The prediction result for the market cap is stored in the list of prediction.
+ 
+
+
+</p>
+</div>
+
+
+
