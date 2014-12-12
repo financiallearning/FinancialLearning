@@ -12,7 +12,7 @@ $(document).ready(function(){
 
   function display_section(id)
 {
-loc = "file:///C:/Users/fyodorminakov/Documents/Website/FinancialLearning/"
+loc = "http://financiallearning.github.io/FinancialLearning/"
 var iddiv = "#" + id;
 $("#icontent").attr('src', loc + id + ".html");
 }
