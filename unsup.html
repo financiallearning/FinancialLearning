@@ -9,7 +9,7 @@
 <p class="section_subtitle">Discovering The Hidden Classes Of The S&P 500</p>
 
 <p class="section_title">First Steps: The No Feedback Problem</p>
-<p> The biggest challenge when running unsupervised learning models is that there is almost no feedback. That is to say, one model's output isn't inherently better than another's, there is no accuracy or precision metric that one could invoke, because there is no baseline of truth. Therefore, one needs to ask the question, what is useful, and what do we want to get out of these classifications. Even this question is difficult to answer because unsupervised learning is supposed to help you discover these truths.</p>
+<p> The biggest challenge when running unsupervised learning models is that there is almost no feedback. That is to say, one model's output isn't inherently better than another's, there is no accuracy or precision metric that one could invoke, because there is no baseline of truth. Therefore, we need to study these generated classes, and see how different class distributions compare in terms of two measures, class density, and class similarity. In other words, how artificial are these divisions, and how similar are different classes to each other.</p>
 
 <p>	The solution to this problem was to test the one realistic metric we had of a classifier's success, the density of a cluster, which we measured as the mean distance of all the points to the center of the cluster, and how this changed when we adapted our machine learning model.</p>
 
@@ -55,7 +55,7 @@
 
 <p>We discovered that most companies stay within a single class over a ten year period, but some companies, we will call them "dynamic", such as Apple Inc ("AAPL") switched classes constantly over a multiple year period.</p>
 
-<p>We discovered that the difference between most classes were not great, and that most companies in the S&P 500 resemble each other. However, we also found that a handful of companies were outliers, and their classification was far from the majority.</p>
+<p>We discovered that the differences between most classes were not great, and that most companies in the S&P 500 resemble each other. However, we also found that a handful of companies were outliers, and their classification was far from the majority.</p>
 
 <p>Finally, we discovered that singular value decomposition is a useful tool, and perhaps more useful than any other attempt to generate a relativistic view of data (how one company differs from another regardless of assets).<p>
 

@@ -4,7 +4,7 @@ $(document).ready(function(){
   document.getElementById("data_scraping").addEventListener("click",function(){display_section("data_scraping")});
   document.getElementById("unsup").addEventListener("click",function(){display_section("unsup")});
   document.getElementById("sup").addEventListener("click",function(){display_section("sup")});
-  document.getElementById("regression").addEventListener("click",function(){display_section("regression")});
+  document.getElementById("regressions").addEventListener("click",function(){display_section("regressions")});
   document.getElementById("conclusion").addEventListener("click",function(){display_section("conclusion")});
   document.getElementById("video").addEventListener("click",function(){display_video()});
   
@@ -15,7 +15,7 @@ $(document).ready(function(){
 loc = "http://financiallearning.github.io/FinancialLearning/"
 loc2 = "file:///C:/Users/fyodorminakov/Documents/Website/FinancialLearning/"
 var iddiv = "#" + id;
-$("#icontent").attr('src', loc + id + ".html");
+$("#icontent").attr('src', loc2 + id + ".html");
 }
 
 function display_video()

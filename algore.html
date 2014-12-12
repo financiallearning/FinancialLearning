@@ -1,0 +1,76 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+</head>
+<body>
+<div class=“sectioninfo1”>
+<p class=“page_title”>SKLEARN Regressions</p>
+<p class=“section_title”>Main Objective</p>
+<p>The objective of part 2 of Financial Learning was to use the 2013 10-K data to predict 2014 Market Capitalization of a selection of S&P500 which had complete 2013 information (ended up being 275 companies). If any of the regression models were to be more than 50% correct in predicting whether the selection of S&P500 increase or decrease percent-wise in market capitalization, then the prediction is meaningful.</p>
+<p class=“section_title”>Shifting Market Cap One Year Down</p>
+<p>Part 2 first involves the loading of two datasets, derived from the Quandl scraped S&P500 10-K Report Variables. One of the datasets is the original file. The other dataset takes the original file, divides all variables(columns) by assets, and conducts normalization based on mean value for all company-years. Then, the main transformation that had to be done was shifting the MARKETCAP value up within each segment of company tickers, so that for instance, the 2011 10-K values for all variables (except MARKETCAP), are associated with the 2012 MARKETCAP.</p>
+<p>As such, relations were created throughout the dataset between the variables in one year’s 10-K, and the following year’s market capitalization, for each company-year. It is important to note that the most recent row of the dataset was eliminated for each company resulting from the shift.</p>
+<p class=“section_title”>Eliminating Market Cap Associated Variables & Dividing by ASSETS</p>
+<p>To limit the direct predictability of market cap from certain variables, we used another file that contained the variable indicators and grouped them into categories; some variables were in the “MC”, or market cap, category, and were therefore eliminated from the dataset.</p>
+<p>Another component was dividing by ASSETS (just for the first dataset – non-normalized), to control for the size of the company in affecting the size of the MARKETCAP. As such, the next year’s market cap is divided by current year’s assets.</p>
+<p>GDP growth was added as a control variable for the macroeconomy, but was later found as an insignificant predictor of MARKETCAP / previous year’s ASSETS.<p>
+<p class=“section_title”>Random Forest Classifier Feature Importance</p>
+<p><At this point, Part 2 conducted a less sophisticated classifier test than done in Part 1 (Supervised Learning), to determine a list of the most important features. For one instance of the classifier, this was the typical instance of the feature importance test for the non-normalized data:<p>
+<p><img src=“images/pt2_img1.png" alt=“Sample Non-Normalized Feature Importance” style="width:500px; height:400px"></p>
+<p>and for the normalized data</p>
+<p><img src=“images/pt2_img2.png" alt=“Sample Normalized Feature Importance” style="width:500px; height:400px"></p>
+<p>To account for differences in each instance, 100 simulations were conducted, which produced a sorted list of variables according to feature importance value, for each of the non-normalized and normalized datasets.</p>
+<p class=“section_title”>SKLEARN LINEAR REGRESSIONS</p>
+<p>We randomly split the 275 companies into 245 companies in the train set and 30 companies in the test set. Then we tested the linear regression model in sklearn on 20 different combinations of the top 20 sorted features. The first combination was just the top feature, second combination was top 2 features, then top 3 features, and so on. We calculated the mean squared error for each combination, and created a list of sorted mean squared errors starting with the least. The top 15 of 20 least mean squared error combinations were used in regression for both the normalized and non-normalized set.</p>
+<p>We then scraped from Yahoo Finance the 2014 current market cap data for the 275 S&P500 companies. These 2014 data points are relevant, as December 2014 market cap reflects the market cap that would be reported in a typical 2014 10-K which we do not have yet at this point (for the majority of 10-K filings, which end their cycle in December 31, 2014). For the best 15 combinations mentioned above in terms of least mean squared error, we tested the linear regression model using the train and test sets. Each of the 15 models was fitted on the 275 2013 10-K  data (which is divided by 2013 assets), to predict 2014 Market Cap divided by 2013 assets. The predictive results are the average of these 15 models.</p>
+<p>The model then repeated the above steps but instead of using the top features based on feature importance from the Random Classifier in Part 2, used the top features resulting from the classification tests in Part 1 (Supervised Learning). Linear regression was performed on both datasets using these top features (but instead of testing 20 combinations and using the top 15 sorted on least mean squared error, we used the top 7 least mean squared error combinations of the 10 features from Supervised Learning.</p>
+<p class=“underlined”>Features used:</p>
+<p>The following are top non-normalized data features for the Part 2 classifier:</p>
+<p><img src=“images/pt2_img3.png" alt=“Features: Non-Normalized” style="width:500px; height:400px"></p>
+<p>The following are top normalized data features for the Part 2 classifier:</p>
+<p><img src=“images/pt2_img4.png" alt=“Features: Normalized” style="width:500px; height:400px"></p>
+<p>The following are top general data features for the Part 1 Supervised Learning classifier:</p>
+<p><img src=“images/pt2_img5.png" alt=“Features: Supervised Learning” style="width:500px; height:400px"></p>
+<p class=“section_title”>Results and Conclusion for SKLEARN Linear Regressions</p>
+<p>Therefore, in total we performed 4 main Linear Regressions (taking the average of the underlying predictions), using the Part 2 top features 2 using the Part 1 Supervised Learning classifier features.</p>
+<p>We produced dataframes produced for each model, listing the predicted Market Cap 2014/ 2013 Assets, the actual Market Cap 2014 / 2013 Assets, and the respective percentage growths towards 2014 from Actual 2013 Market Cap / 2013 Assets. This particular example is the non-normalized, Part 2 dataframe head:</p>
+<p><img src=“images/pt2_img6.png" alt=“Dataframe example” style="width:500px; height:400px"></p>
+<p>You could see in the dataframe that as an investor, we would have correctly invested in AA, AAPL, and  ABC.</p>
+<p>We created a precision test to compare the results of the non-normalized versus normalized datasets. The precision metric = (predicted 2014 market cap / assets – the actual) / actual. The non-normalized set in both the Part 2 and Part 1 (Supervised Learning) resulted in a much lower precision metric of around 200. The normalized set produced precision metrics upward of 4,000.</p>
+<p>To test the success of the regressions, we calculated the number of correct guesses of percent increase(decrease) in 2014 Market Cap / 2013 Assets from 2013 Market Cap / 2013 Assets. The correct number of guesses over total 275 possible guesses gives a percentage of success. For one instance of the Ipython notebook (they would vary in each run, but not significantly), we show below the success ratios and plots of percentage growth (actual vs. predicted). Ideally, we would want all points to fall in the first and third quadrants of the plots:</p>
+<p class=“underlined”>Non-Normalized Data, Part 2 Features<p>
+<p><img src=“images/pt2_img7.png" alt=“Non-normalized Data, Part2” style="width:500px; height:400px"></p>
+<p class=“underlined”>Normalized Data, Part 2 Features<p>
+<p><img src=“images/pt2_img8.png" alt=“Normalized Data, Part2” style="width:500px; height:400px"></p>
+<p class=“underlined”>Non-Normalized Data, Part 1 Supervised Learning Features<p>
+<p><img src=“images/pt2_img9.png" alt=“Non-normalized Data, Part1” style="width:500px; height:400px"></p>
+<p class=“underlined”>Normalized Data, Part 1 Supervised Learning Features<p>
+<p><img src=“images/pt2_img10.png" alt=“Normalized Data, Part1” style="width:500px; height:400px"></p>
+<p>Clear from these results, as well as the precision metrics, is that we favor the non-normalized models over the normalized models, since they give us correct percentages more than 50%. As seen above, the two non-normalized models predict around 56% correctness in the direction of percent change in market capitalization. An investor knowing nothing else about the market and making investment decisions on these 275 companies solely based on the predicted percentages in these models, would have made positive profits in 2014. Therefore, an investor can use either of our non-normalized models to predict 2015 increase or decrease in Market Cap based on the 2014 10-K reports that will come out in early 2015.</p>
+</div>
+<div class=“sectioninfo2”>
+<p class=“page_title”>Other: PanelOLS Regression</p>
+<p>As an alternative strategy, we performed panel regression on the 2013 variables to predict 2014 Market Cap / 2013 Assets. Panel regression with “time” and “entity” fixed effects is an important way to control for unobserved omitted variables that change over time but are constant across entities (such as GDP, political turmoil, recession), and to control for unobserved omitted variables that differ across entities (“companies”) but are constant over time. We used panel OLS and tested it on the Supervised Learning features sorted by least mean squared error. For the first least mean squared error, the panel OLS regression with time and entity fixed effects produced 5 out of 6 statistically significant coefficients for the variables at around the 5% confidence level. The regression yielded a precision metric of around 400, which is better than normalized sklearn linear regression but not as good as non-normalized sklearn linear regression.</p>
+</div>
+<div class=“sectioninfo3”>
+<div>
+<p class=“page_title”>Other: Random Forest Regression and Time Series</p>
+<p class=“section_title”>Methodology</p>
+<p>Random Forest Regression: Random forest regression operate by constructing a multitude of decision trees at training time and give the output of the class that is the mode of classes output by individual trees. It has higher accuracy compared with other models and runs efficiently on large databases, especially for data with thousands of input variables. Sampling with replacement draws the training set of the current tree and about one-third of the cases are left out of sample. The oob(out-of-bag) data is used to get a running unbiased estimate of the classification error as trees are added to the forest. All of the data are run down the tree and proximities are computed for each pair of cases. The proximity is increased by one if two cases occupy the same terminal node.
+In this project, we divided the market cap data into two classes. For market cap that is lower than the median of the market cap, we marked it as 0. For market cap that is higher than the median of the market cap, we mark it as 1. Our prediction would be whether the company has the data that is higher or lower than the median:</p>
+<p>Time Series Regression: The time series is always considered as an ordered sequence of values (data points) of variables at equally spaced time intervals. There are three very broad classes that are used most often, these are autoregressive (AR) models, the integrated (I) models and the moving average (MA) models. These models are often intertwined to generate new models such as the ARMA model, which is basically a combination of (AR) model and (MA) model. The most commonly used model for time series data is autoregressive equation, written as AR(1). The AR(1) equation is a standard linear difference equation:</p>
+<p>We could derive the equation as below:</p>
+<p><img src=“images/TimeSeriesModel.png" alt=“TimeSeriesModel” style="width:500px; height:400px"></p>
+<p>In this project, we are trying to use the market cap data until 2013 to predict the market cap for 2014. Here, the market cap data is the variable X and it repeats recursively to predict the market cap of 2014. For some companies that we just have the data until 2012 for example. We will use the time series to predict the market cap for 2013 first and then use the predicted value to predict the 2014. Based on the fact that time series is only based on one variable, the accuracy for this regression may not that good when applying to our model because it requires a large data set for past years. But the largest dataset we had for one company is 10 and some companies only have two or three years’ data. It would not make sense to use time series for these kinds of companies. So we eliminate the company that has data less than 6 years and run the time series regression to predict the market cap.</p>
+<p class=“section_title”>Results Explanation</p>
+<p class=“underlined”>Random Forest Regression:</p>
+<p>We do the random forest regression for quandl data divided by assets (Not normalized), edgar data divided by assets (Not normalized), quandl data normalized. Since it is the same step used for three datasets, we will use the edgar data divided by assets (not normalized) as an example:</p>
+<p><img src=“images/Prediction.png" alt=“Prediction” style="width:500px; height:400px"></p>
+<p>As we could see from the above plot, the OOB score as an estimate of accuracy of this model is 0.8048. The mean accuracy score for this model is 0.996959. The pred_Marketcap_2014 is the prediction of the market cap for 2014. 0 indicates that the market cap for that company is lower than the median and 1 indicates that the market cap for that company is higher than the median.
+The confusion matrix for the test data:</p>
+<p><img src=“images/confusionmatrix.png" alt=“Confusion Matrix” style="width:500px; height:400px"></p>
+<p>The time series predicts the market cap follows the last year data we have for that company. The prediction result for the market cap is stored in the list of prediction.</p>
+<p><img src=“images/TimeSeries.png" alt="Principal Component 2" style="width:500px; height:400px"></p>
+</div>
+</body>
+</html>
