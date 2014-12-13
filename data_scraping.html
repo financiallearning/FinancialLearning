@@ -1,16 +1,55 @@
 <html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+</head>
 <body>
 <div class="sectioninfo">
-
 <p class="page_title">Data Sources : Data Scraped From Edgar and Quandl Data</p>
 <p class="section_title">EDGAR DATA : "The Scraped Data"</p>
 <br>
 <p>
-The Edgar API was really difficult to navigate, and there was no obvious way to download 10k documents in bulk via FTP, so we ended up writing a console application in C# that used a web driver see "Edgar Extractor" that invoked FireFox to issue a request to the Edgar server to load company document pages by CIK number. Once we reached the interface, we looped through each page of documents, issuing further requests, until we found "10-K" button, which we did using XPath, and which we invoked the web driver to click on.
-At first, we wanted to rely exclusively on parsing of the 10k for our data, but at it turned out, parsing this data was exceedingly difficult, and we only managed to get 25% of the dataset if we were to consider 20+ columns. The parser we built was extremely time-consuming, but ultimately useless. "FinParser.ipynb" contains the useless parser. We looked for alternatives, and found one good one. Excel documents on Edgar, but only for the last 3-5 years.</p>
+Edgar is the SEC's storage system for corporate financial filings. This was consequently the first place we looked for data
+</p>
 <p>
-We went back to our web driver and clicked through the interactive listing of documents in order to find the excel file with all the financial data we needed in a tabular format, which we copied the address of, and downloaded programatically. After downloading every set of financials for last 3-5 years, we built another console application in C# (because this makes sense, if we're dealing with Microsoft applications) to parse the Excel workbooks, and extracting the relevant financial data. We wrote this data to csv files, which we then converted into one large csv "AllEdgar" using the code you see below.</p>
+The Edgar API was really difficult to navigate, and there was no obvious way to download 10k documents in bulk via FTP, so we ended up writing a console application in C# that used a web driver see "Edgar Extractor" that invoked FireFox to issue a request to the Edgar server to load company document pages by CIK number. Once we reached the interface, we looped through each page of documents, issuing further requests, until we found "10-K" button, which we did using XPath, and which we invoked the web driver to click on.
+At first, we wanted to rely exclusively on parsing of the 10k for our data, but at it turned out, parsing this data was exceedingly difficult, and we only managed to get 25% of the dataset if we were to consider 20+ columns. The parser we built was extremely time-consuming, but ultimately useless.</p>
+<p>
+We went back to our web driver and clicked through the interactive listing of documents in order to find the excel file with all the financial data we needed in a tabular format, which we copied the address of, and downloaded programatically. After downloading every set of financials for last 3-5 years, we built another console application in C# to parse the Excel workbooks, and extracting the relevant financial data.</p>
+</div>
+<div class="quandlinfo">
 
+<b><p class="data_scraping_quandl"> Quandl </p> </b>
+
+We found that scraping the data directly in SEC's EDGAR database is challenging, time consuming with little returns because the data entities in the Form 10-K are not really standardized. We started looking for alternate data sources and found that there is really no one who provide a hollistic company fundamentals data that is in EDGAR. Our best option was to use a datasource offered by Quandl.com. 
+
+<p></p>
+<p></p>
+<img src="images/pt1_quandl.png" alt="Quandl site" style="width:600px; height:400px">
+<p></p>
+<p></p>
+Quandl is a website that hosts open datasets for free and commercial use hosted by independant data providers. They are several financial datasets on offer and we looked at the following datasets, 
+<p></p>
+https://www.quandl.com/SEC
+<p></p>
+https://www.quandl.com/RAYMOND
+<p></p>
+https://www.quandl.com/DMDRN
+<p></p>
+<p></p>
+
+before finalizing on this one,
+<p></p>
+https://www.quandl.com/SF1
+<p></p>
+<img src="images/pt1_quandl_sf1.png" alt="Quandl SF1 Dataset" style="width:600px; height:400px">
+<p></p>
+This dataset offers 10 years of SEC filing history, for 69 essential fundamental indicators and financial ratios (https://www.quandl.com/SF1/documentation/indicators), for most of the companies in the S&P500 list. 
+<p></p>
+Sourcing the data was still challenging. Quandl offers several means and they also a Python module that can access their APIs. The instructions on using the python module can be found here. (https://www.quandl.com/help/python)
+<p></p>
+We wrote the Python code to call the API for the S&P 500 companies for every indicator available. Each API resulted in a Python dataframe. The data from all these dataframe are then aligned and then merged into a final dataframe and stored locally in a csv file for further use in the project.
+<p></p>
+<p></p>
 </div>
 </body>
 </html>
