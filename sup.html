@@ -1,0 +1,78 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+</head>
+<body>
+<div class="supervised">
+<b><p class="page_title"> PCA and Supervised Learning </p> </b>
+
+<b><p class="section_title"> Dimensionality Reduction </p> </b>
+
+We used the data assembled from the Quandl source and normalized it. The dataset is grouped into X and Y, X being the fundamental variables that are available in Balance Statements, Income Statements and Cash Flow Statements that do not influence the market capitalization of a company and Y being the market capitalization that is grouped into two classes, class 0 is the list of companies that has a market cap above the market median and the class 1 is the list of companies below market median. The two classes are found to be close to evenly balanced with 59% of companies falling in class 0 and 41% in class 1.
+<p></p>
+For dimensionality reduction, we then applied Singular Value Decomposition (SVD) from the Scikit-Learn library. Then we looked at the first two Principal Components.
+<p></p>
+<p></p>
+<img src="images/pt1_principal_component_analysis.png" alt="Principal Components" style="width:600px; height:400px">
+<p></p>
+<p></p>
+<p></p>
+
+<b><p class="section_title"> Supervised Learning </p> </b>
+
+For supervised learning, we used Random Forest and Support Vector Machine classifiers. 
+<p></p>
+<b><p class="section_title"> Random Forest </p> </b>
+<p></p>
+The Quandl normalized dataset is broken into training and test sets. The training set is run through Random Forest classifier by varying the number of decision trees from 1 to 20. It observed that the classifier performance peaked and saturated at 8 trees. 
+<p></p>
+<img src="images/pt1_random_forest_optimal_trees.png" alt="Optimal Decision Trees" style="width:600px; height:400px">
+<p></p>
+<b><p class="section_title"> Random Forest Feature Selection </p> </b>
+<p></p>
+From the Random Forest classifier, the top features in the fundamentals data that related to the classification of the market capitalization are found to be the following along with their scores.
+<p></p>
+<img src="images/pt1_random_forest_top_features.png" alt="Random Forest feature selection" style="width:600px; height:500px">
+<p></p>
+<b><p class="section_title"> Support Vector Machines (SVM) </p> </b>
+<p></p>
+The same dataset is then trained with the Support Vector Machine (SVM) in linear kernel mode with C=1 and gamma=0.5 
+<p></p>
+<b><p class="section_title"> SVM Feature Selection </p> </b>
+<p></p>
+From the SVM classifier, the top features in the fundamentals data that related to the classification of the market capitalization are found to be the following along with their scores.
+<p></p>
+<img src="images/pt1_SVM_top_features.png" alt="SVM feature selection" style="width:600px; height:500px">
+<p></p>
+The classification of the top two features from the Random Forest and SVM are examined using the visual boundaries.
+<p></p>
+<img src="images/pt1_random_forest_decision_boundary.png" alt="SVM feature selection" style="width:600px; height:500px">
+<p></p>
+<img src="images/pt1_SVM_decision_boundary.png" alt="SVM feature selection" style="width:600px; height:500px">
+<p></p>
+As can be seen, both the classifiers performed better and offered better prediction of the two classes. The overall classification performance is also examined using the confusion matrices for Random Forest and SVM respectively.
+<p></p>
+<img src="images/pt1_random_forest_confusion_matrix.png" alt="SVM feature selection" style="width:300px; height:300px">
+<p></p>
+<img src="images/pt1_SVM_confusion_matrix.png" alt="SVM feature selection" style="width:300px; height:300px">
+<p></p>
+<b><p class="section_title"> Conclusion </p> </b>
+<p></p>
+We used Random Forest and SVM classifers and used fundamental variables that do not relate to Market Cap as the input. Both the classifiers are trained and found to be producing consistent results. The top fundamental variables that have a higher impact on the market cap are found to be,
+<p></p>
+Net Income (NETINC)
+<p></p>
+Earning Before Interest & Taxes (EBIT)
+<p></p>
+Net Cash Flow from Operations (NCFO)
+<p></p>
+Net Income Common Stock (NETINCCMN)
+<p></p>
+Shareholders Equity (EQUITY)
+<p></p>
+<p></p>
+<p></p>
+</div>
+</body>
+</html>
+

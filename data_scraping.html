@@ -8,7 +8,7 @@
 <p class="section_title">EDGAR DATA : "The Scraped Data"</p>
 <br>
 <p>
-Edgar is the SEC's storage system for corporate financial filings. This was consequently the first place we looked for data
+Edgar is the SEC's storage system for corporate financial filings. This was consequently the first place we looked for data.
 </p>
 <p>
 The Edgar API was really difficult to navigate, and there was no obvious way to download 10k documents in bulk via FTP, so we ended up writing a console application in C# that used a web driver see "Edgar Extractor" that invoked FireFox to issue a request to the Edgar server to load company document pages by CIK number. Once we reached the interface, we looped through each page of documents, issuing further requests, until we found "10-K" button, which we did using XPath, and which we invoked the web driver to click on.

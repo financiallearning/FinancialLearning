@@ -15,7 +15,7 @@ $(document).ready(function(){
 loc = "http://financiallearning.github.io/FinancialLearning/"
 loc2 = "file:///C:/Users/fyodorminakov/Documents/Website/FinancialLearning/"
 var iddiv = "#" + id;
-$("#icontent").attr('src', loc + id + ".html");
+$("#icontent").attr('src', loc2 + id + ".html");
 }
 
 function display_video()
