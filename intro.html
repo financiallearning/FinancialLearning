@@ -1,13 +1,24 @@
 <html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+</head>
 <body>
 <div class="sectioninfo">
+<p class="page_title">Financial Learning</p>
+<p class="section_subtitle">Using Machine Learning And Regression To Classify And Predict Market Capitalization For S&P 500 Companies</p>
+<p class="section_title">Motivation:<p>
 
-<p>A paragraph of text </p>
+	<p>The initial motivation for our project, Financial Learning, was a desire to study the lifecycle of companies over a decade, and to attempt to correlate the decisions made by the company - independent variables under the company's control appearing on the balance sheet, income statement, and statement of cash flows - with market capitalization. Another strong motivation was to study the similarities and differences between companies, and to attempt to group companies together not simply by size, age, or industry, but by the similarities contained within the financial statements. Which alternative groups might be useful in improving our understanding of companies?</p>
+	
+<p class="section_title">Methodology:</p>
 
-<div class="image_title">Principal Componenet 2</div>
-<img src="images/p0_pc2.png" alt="Principal Component 2" style="width:900px; height:400px">
+	<p>To collect our data, we explored two sources: the official EDGAR 10-k database, which we scraped, and a third party data provider called Quandl.</p>
 
-<p>Another paragraph </p>
+	<p>The first step we took was to identify a classification system for companies through unsupervised learning using multiple models. While defining our classification system, we took steps to increase cluster density, and to compare the results of models where we selected the number of classes with those where they were selected for us by random sampling.
+</p>
+	<p>The second step was to classify companies with supervised learning, which allowed us to get a better sense of how known classes of companies were distributed, and to give weight to certain variables used in the regression based on their importance in defining the class.</p>
+
+	<p>The final objective was to use financial data from one year to predict the market capitalization of a company in the following year. As an investor, if the regression models proved to be accurate more than fifty percent of the time, it might be worthwhile to go long and short on stocks according to our model.</p>
 
 </div>
 </body>

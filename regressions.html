@@ -60,17 +60,17 @@
 In this project, we divided the market cap data into two classes. For market cap that is lower than the median of the market cap, we marked it as 0. For market cap that is higher than the median of the market cap, we mark it as 1. Our prediction would be whether the company has the data that is higher or lower than the median:</p>
 <p>Time Series Regression: The time series is always considered as an ordered sequence of values (data points) of variables at equally spaced time intervals. There are three very broad classes that are used most often, these are autoregressive (AR) models, the integrated (I) models and the moving average (MA) models. These models are often intertwined to generate new models such as the ARMA model, which is basically a combination of (AR) model and (MA) model. The most commonly used model for time series data is autoregressive equation, written as AR(1). The AR(1) equation is a standard linear difference equation:</p>
 <p>We could derive the equation as below:</p>
-<p><img src="images/TimeSeriesModel.png" alt="TimeSeriesModel"></p>
+<p><img src="images/TimeSeriesModel.png" alt="TimeSeriesModel" style="width:550px; height:350px"></p>
 <p>In this project, we are trying to use the market cap data until 2013 to predict the market cap for 2014. Here, the market cap data is the variable X and it repeats recursively to predict the market cap of 2014. For some companies that we just have the data until 2012 for example. We will use the time series to predict the market cap for 2013 first and then use the predicted value to predict the 2014. Based on the fact that time series is only based on one variable, the accuracy for this regression may not that good when applying to our model because it requires a large data set for past years. But the largest dataset we had for one company is 10 and some companies only have two or three years’ data. It would not make sense to use time series for these kinds of companies. So we eliminate the company that has data less than 6 years and run the time series regression to predict the market cap.</p>
 <p class="section_title">Results Explanation</p>
 <p class="underlined">Random Forest Regression:</p>
 <p>We do the random forest regression for quandl data divided by assets (Not normalized), edgar data divided by assets (Not normalized), quandl data normalized. Since it is the same step used for three datasets, we will use the edgar data divided by assets (not normalized) as an example:</p>
-<p><img src="images/Prediction.png" alt="Prediction"></p>
+<p><img src="images/Prediction.png" alt="Prediction" style="width:600px; height:300px"></p>
 <p>As we could see from the above plot, the OOB score as an estimate of accuracy of this model is 0.8048. The mean accuracy score for this model is 0.996959. The pred_Marketcap_2014 is the prediction of the market cap for 2014. 0 indicates that the market cap for that company is lower than the median and 1 indicates that the market cap for that company is higher than the median.
 The confusion matrix for the test data:</p>
 <p><img src="images/confusionmatrix.png" alt="Confusion Matrix"></p>
 <p>The time series predicts the market cap follows the last year data we have for that company. The prediction result for the market cap is stored in the list of prediction.</p>
-<p><img src="images/TimeSeries.png" alt="Principal Component 2"></p>
+<p><img src="images/TimeSeries.png" alt="Principal Component 2" style="width:600px; height:400px"></p>
 </div>
 </body>
 </html>

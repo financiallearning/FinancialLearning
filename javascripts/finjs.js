@@ -20,5 +20,5 @@ $("#icontent").attr('src', loc + id + ".html");
 
 function display_video()
 {
-	$("#icontent").attr('src', "https://www.youtube.com/embed/QYHeKQI8Oyw");
+	$("#icontent").attr('src', "https://www.youtube.com/embed/TFyFE7dRDYM");
 }
